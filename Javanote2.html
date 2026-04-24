@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Java数组 笔记</title>
+    <style>
+        body { padding: 20px; line-height: 1.9; font-size: 16px; }
+        h2 { color: #1976D2; }
+        .date { color: #666; margin-bottom: 15px; }
+        .red { color: red; font-weight: bold; }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期：2026.4.20</div>
+    <h2>Java 数组 基础笔记</h2>
+    <p>1. 概念：数组是<span class="red">相同数据类型</span>元素的有序集合，长度固定不可更改。</p>
+    <p>2. 特点：连续内存空间、通过下标访问，下标从 <span class="red">0</span> 开始。</p>
+    <p>3. 分类：一维数组、二维数组、多维数组。</p>
+    <p>4. 常用属性：<span class="red">数组名.length</span> 获取数组长度。</p>
+    <p>5. 注意：下标越界会抛出数组越界异常。</p>
+
+    <h3>一维数组 示例代码</h3>
+<pre>
+public class ArrayDemo {
+    public static void main(String[] args) {
+        // 数组创建并赋值
+        int[] arr = {11,22,33,44,55};
+        
+        // 输出数组长度
+        System.out.println(arr.length);
+        // 通过下标取值
+        System.out.println(arr[0]);
+        
+        // 循环遍历数组
+        for(int i = 0; i < arr.length; i++){
+            System.out.print(arr[i] + " ");
+        }
+    }
+}
+</pre>
+</body>
+</html>
