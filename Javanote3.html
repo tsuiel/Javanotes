@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Java冒泡排序 笔记</title>
+    <style>
+        body { padding: 20px; line-height: 1.9; font-size: 16px; }
+        h2 { color: #1976D2; }
+        .date { color: #666; margin-bottom: 15px; }
+        .red { color: red; font-weight: bold; }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期：2026.4.22</div>
+    <h2>Java 冒泡排序 </h2>
+    <p>1. 原理：重复遍历数组，<span class="red">相邻元素两两对比</span>，顺序错误则交换位置。</p>
+    <p>2. 规则：每一轮排序都会把当前最大值排到末尾，总共循环<span class="red">长度-1</span>轮。</p>
+    <p>3. 特点：属于<span class="red">稳定排序</span>，占用内存少，算法逻辑简单易懂。</p>
+    <p>4. 复杂度：时间复杂度<span class="red">O(n²)</span>，空间复杂度 O(1)。</p>
+    <p>5. 适用：适合少量数据排序，是Java入门经典排序算法。</p>
+
+    <h3>冒泡排序 示例代码</h3>
+<pre>
+public class BubbleSort {
+    public static void main(String[] args) {
+       
+        int[] arr = {5,2,9,1,6,3};
+
+        // 外层循环：控制排序轮数
+        for(int i = 0; i < arr.length - 1; i++){
+            // 内层循环：相邻元素比较
+            for(int j = 0; j < arr.length - 1 - i; j++){
+                if(arr[j] > arr[j+1]){
+                    // 交换两个元素
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
+        }
+
+        // 遍历输出排序后的数组
+        for(int num : arr){
+            System.out.print(num + " ");
+        }
+    }
+}
+</pre>
+</body>
+</html>
