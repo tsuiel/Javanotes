@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Java 循环笔记</title>
+    <style>
+        body { padding: 20px; line-height: 1.9; font-size: 16px; }
+        h2 { color: #1976D2; }
+        h3 { color: #388E3C; }
+        .date { color: #666; margin-bottom: 15px; }
+        .red { color: red; font-weight: bold; }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期：2026.4.30</div>
+    <h2>Java 循环结构基础笔记</h2>
+    <p>1. 循环作用：让一段代码 <span class="red">重复执行</span>，简化代码、提高复用性。</p>
+    <p>2. 循环三要素：初始值、判断条件、更新值（步长）。</p>
+    <p>3. 常用循环：<span class="red">for 循环</span>、<span class="red">while 循环</span>、do-while 循环。</p>
+    <p>4. 死循环：条件永远为 true，会一直执行，需避免。</p>
+    <p>5. 跳出循环：<span class="red">break</span> 跳出整个循环；<span class="red">continue</span> 跳过本次循环。</p>
+
+    <h3>一、for 循环（最常用，适合次数固定）</h3>
+    <p>格式：</p>
+    <pre>
+for(初始值; 判断条件; 更新值){
+    循环体代码;
+}
+    </pre>
+    <p>执行顺序：初始值 → 判断条件 → 循环体 → 更新值 → 判断条件...</p>
+
+    <h3>for 循环示例</h3>
+<pre>
+public class ForDemo {
+    public static void main(String[] args) {
+        // 输出 1~5
+        for(int i = 1; i <= 5; i++){
+            System.out.println("i = " + i);
+        }
+    }
+}
+</pre>
+
+    <h3>二、while 循环（先判断，再执行）</h3>
+    <p>格式：</p>
+    <pre>
+while(判断条件){
+    循环体代码;
+    更新值;
+}
+    </pre>
+    <p>特点：条件不满足时，<span class="red">一次都不执行</span>。</p>
+
+    <h3>while 循环示例</h3>
+<pre>
+public class WhileDemo {
+    public static void main(String[] args) {
+        // 输出 1~5
+        int i = 1;
+        while(i <= 5){
+            System.out.println("i = " + i);
+            i++;
+        }
+    }
+}
+</pre>
+
+    <h3>三、do-while 循环（先执行，再判断）</h3>
+    <p>格式：</p>
+    <pre>
+do{
+    循环体代码;
+    更新值;
+}while(判断条件);
+    </pre>
+    <p>特点：无论条件是否成立，<span class="red">至少执行一次</span>。</p>
+
+    <h3>循环对比总结</h3>
+    <p>• for 循环：适合 <span class="red">已知循环次数</span> 的场景。</p>
+    <p>• while 循环：适合 <span class="red">未知循环次数</span> 的场景。</p>
+    <p>• do-while 循环：必须 <span class="red">先执行一次</span> 时使用。</p>
+</body>
+</html>
