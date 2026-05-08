@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>设计模式原则笔记</title>
+    <style>
+        body { padding: 20px; line-height: 1.9; font-size: 16px; }
+        h2 { color: #1976D2; }
+        .red { color: red; font-weight: bold; }
+        .date { color:#666; margin-bottom:15px; }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期：2026.5.7</div>
+
+    <h2>一、单一职责原则</h2>
+    <p>原始的<code>Login</code>类承担了太多职责：界面初始化、显示、验证、数据库连接、用户查询等，不符合单一职责原则。</p>
+    <p><span class="red">重构思路：按职责拆分，每个类只负责一件事</span></p>
+
+    <h3>1. 职责拆分方案</h3>
+    <pre>
+// 职责1：界面交互（UI层）
+public class LoginUI {
+    public void init() { /* 初始化界面 */ }
+    public void display() { /* 显示界面 */ }
+}
+
+// 职责2：用户验证（业务逻辑层）
+public class LoginValidator {
+    public boolean validate(String username, String password) {
+        UserDAO dao = new UserDAO();
+        return dao.findUser(username, password);
+    }
+}
+
+// 职责3：数据库操作（数据访问层）
+public class UserDAO {
+    public Connection getConnection() { /* 获取数据库连接 */ }
+    public boolean findUser(String username, String password) { /* 查询用户 */ }
+}
+
+// 主入口
+public class LoginMain {
+    public static void main(String[] args) {
+        LoginUI ui = new LoginUI();
+        LoginValidator validator = new LoginValidator();
+        
+        ui.init();
+        ui.display();
+        
+        // 获取用户输入并验证
+        boolean success = validator.validate("admin", "123456");
+        System.out.println(success ? "登录成功" : "登录失败");
+    }
+}
+    </pre>
+    <p>重构后，界面、业务逻辑、数据访问职责分离，任何一处修改都不会影响其他模块。</p>
+
+    <hr>
+
+    <h2>二、开闭原则</h2>
+    <p>原始设计中，<code>ChartDisplay</code>需要根据<code>type</code>来判断创建哪种图表，新增图表时必须修改<code>ChartDisplay</code>的代码，违反了开闭原则。</p>
+    <p><span class="red">重构思路：抽象接口 + 依赖注入，对扩展开放，对修改关闭</span></p>
+
+    <h3>1. 重构代码示例</h3>
+    <pre>
+// 抽象图表接口
+public interface Chart {
+    void display();
+}
+
+// 饼状图实现
+public class PieChart implements Chart {
+    @Override
+    public void display() {
+        System.out.println("显示饼状图");
+    }
+}
+
+// 柱状图实现
+public class BarChart implements Chart {
+    @Override
+    public void display() {
+        System.out.println("显示柱状图");
+    }
+}
+
+// 新增折线图，无需修改原有代码
+public class LineChart implements Chart {
+    @Override
+    public void display() {
+        System.out.println("显示折线图");
+    }
+}
+
+// 显示类（依赖抽象，不依赖具体实现）
+public class ChartDisplay {
+    private Chart chart;
+
+    // 通过构造器注入具体图表对象
+    public ChartDisplay(Chart chart) {
+        this.chart = chart;
+    }
+
+    public void display() {
+        chart.display();
+    }
+}
+
+// 客户端调用
+public class Client {
+    public static void main(String[] args) {
+        Chart pie = new PieChart();
+        Chart bar = new BarChart();
+        Chart line = new LineChart();
+
+        ChartDisplay display1 = new ChartDisplay(pie);
+        ChartDisplay display2 = new ChartDisplay(bar);
+        ChartDisplay display3 = new ChartDisplay(line);
+
+        display1.display();
+        display2.display();
+        display3.display();
+    }
+}
+    </pre>
+    <p>重构后，新增图表类型只需实现<code>Chart</code>接口即可，无需修改<code>ChartDisplay</code>，完全符合开闭原则。</p>
+
+    <h3>核心对比</h3>
+    <table border="1" cellpadding="6" cellspacing="0">
+        <tr>
+            <th>原则</th>
+            <th>核心思想</th>
+            <th>本次应用要点</th>
+        </tr>
+        <tr>
+            <td>单一职责原则</td>
+            <td>一个类只负责一个职责</td>
+            <td>将<code>Login</code>拆分为UI、验证、DAO三层</td>
+        </tr>
+        <tr>
+            <td>开闭原则</td>
+            <td>对扩展开放，对修改关闭</td>
+            <td>定义<code>Chart</code>接口，新增图表无需修改显示类</td>
+        </tr>
+    </table>
+</body>
+</html>

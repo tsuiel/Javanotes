@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Java 课堂笔记</title>
+    <style>
+        body { padding: 20px; line-height: 1.9; font-size: 16px; }
+        h2 { color: #1976D2; }
+        .red { color: red; font-weight: bold; }
+        .date { color:#666; margin-bottom:15px; }
+        pre {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期：2026.5.9</div>
+
+    <h2>一、匿名内部类应用：计算方法执行耗时（Homework1）</h2>
+    <p>核心需求：用匿名内部类，封装一段代码，然后计算它的执行时间。</p>
+
+    <h3>1. 通用耗时工具类（核心）</h3>
+    <pre>
+// 定义一个接口
+public interface Task {
+    void execute();
+}
+
+// 耗时工具
+public class TimeUtil {
+    public static void measure(Task task) {
+        long start = System.currentTimeMillis();
+        task.execute(); // 执行传入的任务
+        long end = System.currentTimeMillis();
+        System.out.println("方法执行耗时：" + (end - start) + "ms");
+    }
+}
+    </pre>
+
+    <h3>2. 使用匿名内部类实现任务</h3>
+    <pre>
+public class Test {
+    public static void main(String[] args) {
+        // 用匿名内部类传入要执行的代码
+        TimeUtil.measure(new Task() {
+            @Override
+            public void execute() {
+                // 这里写要测试的业务代码
+                for (int i = 0; i < 1000000; i++) {
+                    Math.sqrt(i);
+                }
+            }
+        });
+    }
+}
+    </pre>
+    <p>💡 思路：把要执行的代码封装成一个接口，用匿名内部类实现接口，再由工具类统一计时。</p>
+
+    <hr>
+
+    <h2>二、Java 反射机制（Homework2）</h2>
+    <p>反射是Java中，在<span class="red">运行时</span>动态获取类的信息，并操作对象的一种机制。</p>
+
+    <h3>1. 核心概念</h3>
+    <p>- 作用：在运行时，动态获取类的属性、方法、构造器，调用对象方法，修改对象属性。</p>
+    <p>- 关键类：`Class`、`Constructor`、`Method`、`Field`。</p>
+
+    <h3>2. 获取 Class 对象的三种方式</h3>
+    <pre>
+public class ReflectDemo {
+    public static void main(String[] args) throws Exception {
+        // 方式1：类名.class
+        Class clazz1 = User.class;
+
+        // 方式2：对象.getClass()
+        User user = new User();
+        Class clazz2 = user.getClass();
+
+        // 方式3：Class.forName("全类名")
+        Class clazz3 = Class.forName("com.example.User");
+    }
+}
+    </pre>
+
+    <h3>3. 反射调用方法示例</h3>
+    <pre>
+import java.lang.reflect.Method;
+
+public class User {
+    private String name;
+
+    public void sayHello() {
+        System.out.println("Hello, " + name);
+    }
+}
+
+public class ReflectCall {
+    public static void main(String[] args) throws Exception {
+        Class clazz = User.class;
+        User user = (User) clazz.newInstance();
+
+        // 获取并调用sayHello方法
+        Method method = clazz.getDeclaredMethod("sayHello");
+        method.invoke(user);
+    }
+}
+    </pre>
+
+    <h3>4. 反射的优缺点</h3>
+    <p>✅ 优点：高度灵活，可在运行时动态扩展，是很多框架（Spring、MyBatis）的底层基础。</p>
+    <p>❌ 缺点：性能较差，破坏封装性，降低代码可读性，不建议频繁使用。</p>
+</body>
+</html>
