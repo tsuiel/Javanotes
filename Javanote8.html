@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 类与对象 笔记</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f7f9fc;
+            padding: 30px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .date {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        h1 {
+            color: #2c52b9;
+            font-size: 22px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e8f0fe;
+            padding-bottom: 8px;
+        }
+        .section {
+            margin-bottom: 24px;
+        }
+        .section p {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+        .highlight {
+            color: #d93025;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 18px;
+            margin: 24px 0 12px;
+            color: #333;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="date">笔记日期: 2026.5.15</div>
+        <h1>Java 类与对象 基础笔记</h1>
+
+        <div class="section">
+            <p>1. 类的概念：类是对象的模板，是对一类事物的共同属性和行为的抽象。</p>
+            <p>2. 对象的概念：对象是类的实例，是类的具体实现，通过 <span class="highlight">new</span> 关键字创建。</p>
+            <p>3. 类的组成：成员变量（属性）、成员方法（行为）、构造方法。</p>
+            <p>4. 构造方法：方法名与类名完全一致，没有返回值，用于对象初始化。</p>
+            <p>5. 访问修饰符：<span class="highlight">public、private、protected、默认</span>，控制类和成员的访问权限。</p>
+        </div>
+
+        <h2>类与对象 完整示例代码</h2>
+<pre>
+// 定义一个学生类
+public class Student {
+    // 成员变量（属性）
+    private String name;
+    private int age;
+
+    // 构造方法
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // 成员方法（行为）
+    public void showInfo() {
+        System.out.println("姓名：" + name + "，年龄：" + age);
+    }
+
+    // 主方法，程序入口
+    public static void main(String[] args) {
+        // 创建对象
+        Student s = new Student("张三", 18);
+        // 调用方法
+        s.showInfo();
+    }
+}
+</pre>
+
+        <h2>核心知识点补充</h2>
+<pre>
+this关键字
+作用1：区分成员变量和局部变量
+作用2：在构造方法中调用本类其他构造方法
+
+封装
+使用private修饰成员变量，提供get/set方法访问，保护数据安全
+
+匿名对象
+new Student("李四", 20).showInfo();
+特点：只能使用一次，没有引用变量指向
+</pre>
+    </div>
+</body>
+</html>

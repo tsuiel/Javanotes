@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 文件复制竞赛题作业</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f7f9fc;
+            padding: 30px;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .date {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        h1 {
+            color: #2c52b9;
+            font-size: 22px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e8f0fe;
+            padding-bottom: 8px;
+        }
+        .section {
+            margin-bottom: 24px;
+        }
+        .section p {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+        .highlight {
+            color: #d93025;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 18px;
+            margin: 24px 0 12px;
+            color: #333;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="date">笔记日期: 2026.5.23</div>
+        <h1>Java IO 文件复制 竞赛题笔记</h1>
+        <h2>文本文件复制</h2>
+        <div class="section">
+            <p>1. 文本文件复制：使用<strong>字符缓冲流</strong>实现，是处理纯文本文件最常用的方式。</p>
+            <p>2.使用场景：处理。TXT等纯文本文件。</p>
+            <p>3. 优势：内置缓冲区，读写效率远高于基础字符流。</p>
+        </div>
+
+        <h2>文本文件复制  字符缓冲流代码</h2>
+<pre>
+import java.io.*;
+
+public class TextCopyDemo {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader("src.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("dest.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            bw.write(line);
+            bw.newLine();
+        }
+        br.close();
+        bw.close();
+    }
+}
+</pre>
+       <h2>任意文件复制</h2>
+        <div class="section">
+            <p>1.任意文件复制：使用<strong>字节缓冲流</strong>实现，支持所有类型文件。</p>
+            <p>2.使用场景：处理。所有类型文件。</p>
+            <p>3.优势：自带缓冲区，兼容性最强。</p>
+        </div>
+        <h2>任意文件复制  字节缓冲流代码</h2>
+<pre>
+import java.io.*;
+
+public class FileCopyDemo {
+    public static void main(String[] args) throws IOException {
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream("source.jpg"));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("target.jpg"));
+        byte[] buf = new byte[1024];
+        int len;
+        while ((len = bis.read(buf)) != -1) {
+            bos.write(buf, 0, len);
+        }
+        bis.close();
+        bos.close();
+    }
+}
+</pre>
+    </div>
+</body>
+</html>
