@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Java面向抽象原则笔记</title>
+    <style>
+        body{
+            font-family: "Microsoft Yahei",sans-serif;
+            padding:20px;
+            background:#fff;
+        }
+        .date{
+            color:#999;
+            font-size:14px;
+            margin-bottom:15px;
+        }
+        h2{
+            color:#0066cc;
+        }
+        pre{
+            background:#f3f3f3;
+            padding:15px;
+            border-radius:6px;
+            overflow-x:auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期: 2026.5.28</div>
+    <h2>Java面向抽象编程原则</h2>
+    <p>1. 抽象载体：<code>abstract抽象类</code>、<code>interface接口</code>，只定义规范，不写完整实现</p>
+    <p>2. 编程核心：<strong>变量、方法参数优先使用抽象类型，实际传入具体实现类对象</strong></p>
+    <p>3. 设计目的：代码解耦，降低依赖，便于后期替换实现类，符合开闭原则</p>
+    <p>特点：面向抽象、面向接口编程，屏蔽底层实现细节，拓展性更强。</p>
+
+    <h3>简单示例代码</h3>
+<pre>
+定义抽象（接口，抽象规范）
+interface Animal{
+    void shout();
+}
+具体实现类1
+class Dog implements Animal{
+    @Override
+    public void shout() {
+        System.out.println("汪汪叫");
+    }
+}
+具体实现类2
+class Cat implements Animal{
+    @Override
+    public void shout() {
+        System.out.println("喵喵叫");
+    }
+}
+
+public class Test{
+参数用抽象接口Animal，不绑定具体Dog/Cat
+    public static void call(Animal animal){
+        animal.shout();
+    }
+    public static void main(String[] args) {
+抽象引用指向具体对象
+        Animal a1 = new Dog();
+        Animal a2 = new Cat();
+        call(a1);
+        call(a2);
+    }
+}
+</pre>
+</body>
+</html>

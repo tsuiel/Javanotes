@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Java线程创建笔记</title>
+    <style>
+        body{
+            font-family: "Microsoft Yahei",sans-serif;
+            padding:20px;
+            background:#fff;
+        }
+        .date{
+            color:#999;
+            font-size:14px;
+            margin-bottom:15px;
+        }
+        h2{
+            color:#0066cc;
+        }
+        pre{
+            background:#f3f3f3;
+            padding:15px;
+            border-radius:6px;
+            overflow-x:auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="date">笔记日期: 2026.6.5</div>
+    <h2>Java两种创建线程方式</h2>
+    <p>1. 继承类方式：<code>extends Thread</code>，重写run()方法</p>
+    <p>2. 接口实现：<code>implements Runnable</code>，重写run()方法</p>
+    <p>特点：</p>
+    <ul>
+        <p>Thread：单继承限制，无法再继承其他类，多线程不能共享成员变量</p>
+        <p>Runnable：无继承限制，同任务对象可被多个线程共用，实现资源共享</p>
+    </ul>
+
+    <h3>简单示例代码</h3>
+<pre>
+1.继承Thread示例
+class MyThread extends Thread{
+    @Override
+    public void run() {
+        System.out.println("继承Thread线程运行");
+    }
+}
+
+2.实现Runnable示例
+class MyRun implements Runnable{
+    @Override
+    public void run() {
+        System.out.println("实现Runnable线程运行");
+    }
+}
+
+public class ThreadTest{
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        t1.start();
+
+        MyRun run = new MyRun();
+        Thread t2 = new Thread(run);
+        t2.start();
+    }
+}
+</pre>
+</body>
+</html>
